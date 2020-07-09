@@ -12,10 +12,10 @@
   <main>
     <div id='errors'></div>
     <section>
-      <form class="" onsubmit="return Client.hadleSubmit(event)">
+      <form class="" onsubmit="return Client.addTrip(event)">
         <input id='loc' type='text' name='input-city' value='' placeholder='Destination' required>
         <input id='date' type='date' name='input-date' value='' placeholder='yyyy-mm-dd' required>
-        <input type="submit" name="" value="Save Trip" onclick="return Client.handleSubmit(event)" onsubmit="return Client.handleSubmit(event)">
+        <input type="submit" name="" value="Save Trip">
       </form>
     </section>
     <section id='no-data'>

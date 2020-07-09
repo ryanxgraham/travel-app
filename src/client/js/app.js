@@ -1,3 +1,12 @@
+//LOADING WHEEL
+const spinner = document.getElementById("spinner");
+function showSpinner() {
+  spinner.className = "show";
+  spinner.className = spinner.className.replace("show", "");
+}
+function hideSpinner() {
+  spinner.className = spinner.className.replace("show", "");
+}
 //VALIDATE DATE FORMAT
 function dateChecker(possibleDate) {
   var datePattern = /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/;
@@ -7,33 +16,32 @@ function dateChecker(possibleDate) {
 }
 
 //GET INFO ABOUT A TRIP
-const getTripData = async(loc, date) => {
+const getTripData = async(loc, date, dataToSave = {}) => {
+  showSpinner()
   try {
-    const res = await fetch(`http://localhost:3000/forcast?loc=${loc}&date=${date}`);
-    const resData = await resp.json();
+    let res = await fetch(`http://localhost:3000/forecast?loc=${loc}&date=${date}`)
+    .then(hideSpinner())
+    let resData = res.json()
+    console.log(resData)
     return resData;
   } catch (error) {
-    console.log('error': error)
+    console.log('Error!', error)
   }
 }
 
 //ADD A TRIP & SAVE LOCALLY
 async function addTrip(event) {
   event.preventDefault();
-
   const loc = document.getElementById('loc');
   const date = document.getElementById('date');
 
-  if (Client.dateChecker(date.value) != true {
-    document.getElementById('errors').innerHTML = 'Invalid date!\nPlease use YYYY-MM-DD format.';
-    document.getElementById('errors').style.display = 'block';
-    setTimeout(function () {document.getElementById('errors').style.display='none'}, 2000);
+  if (Client.dateChecker(date.value) != true) {
+    alert('Invalid date! Please use YYYY-MM-DD format.');
     return false;
   }
-
-  const tripData = await getTripData(loc.value, date.value);
+  const  tripData = await getTripData(loc.value, date.value)
   await saveTripstoCache(tripData);
-  displayOneTrip(tripData, getTripData.length);
+  displayOneTrip(tripData, getTripData.length)
   loc.value = "";
   date.value = "";
 }
@@ -42,7 +50,7 @@ async function addTrip(event) {
 const displayTrips = async() => {
   var trips = await getTripsfromCache();
 
-  if(!trips) return;
+  if (!trips) return;
 
   const tripsDisplay = document.getElementById('results');
   tripsDisplay.innerHTML = "";
@@ -57,6 +65,7 @@ document.addEventListener('DOMContentLoaded', () => displayTrips(), false);
 //SAVE TRIPS LOCALLY
 const saveTripstoCache = async(tripData) => {
   var trips = JSON.parse(localStorage.getItem('trips'));
+  console.log(trips)
   if (!trips)
     trips = new Array();
   if (trips.length > 0)
@@ -87,7 +96,7 @@ const delTripFromCache = async(id) => {
 
 //DISPLAY ONE TRIP
 async function displayOneTrip(trip, index, tripsDisplay) {
-  awiat displayNoTrips()
+  await displayNoTrips()
   let scrollLast = false;
   if (!tripsDisplay) {
     tripsDisplay = document.getElementById('results');
@@ -101,23 +110,24 @@ async function displayOneTrip(trip, index, tripsDisplay) {
 
   //CREATE DELETE BUTTON
   const delIcon = document.createElement('a');
-  del.innerText = 'X';
-  del.href = "#";
-  del.className = 'close'
-  del.addEventListener(click, async(e) => {
+  delIcon.innerText = 'X';
+  delIcon.href = "#";
+  delIcon.className = 'close'
+  delIcon.addEventListener('click', async(e) => {
     if (confirm(`Delete trop to ${trip.location.name}?`)) {
       await delTripFromCache(trip.id);
-      awiat displayTrips();
+      await displayTrips();
     }
   });
-  tripCard.appendChild(del);
+  tripCard.appendChild(delIcon);
 
   //WEATHER icon
   if (trip.weather.icon) {
     let wDiv = document.createElement('div');
-    wDiv.className = 'weather'
+    wDiv.className = 'weather';
     let img = document.createElement('img');
-    img.src = `media/icons/${trip.weather.icon}.png`
+    img.src = `icons/${trip.weather.icon}.png`;
+    img.className ='icon';
     wDiv.appendChild(img);
     let wInfo = document.createElement('div');
     wInfo.innerHTML = `${trip.weather.temperature}&deg; with ${trip.weather.description}`;
@@ -129,13 +139,14 @@ async function displayOneTrip(trip, index, tripsDisplay) {
     noInfo.className = 'noinfo';
     tripCard.appendChild(noinfo);
   }
+
   //LOCATION PHOTO
   let picDiv = document.createElement('div');
   let img = null;
-  if (trip.img && trip.image.webformatURL) {
+  if (trip.image && trip.image.webformatURL) {
     let imgDiv = document.createElement('div');
     let img = document.createElement('img');
-    img.src = trip.img.webformatURL;
+    img.src = trip.image.webformatURL;
     imgDiv.className = 'image';
     imgDiv.appendChild(img);
     tripCard.appendChild(imgDiv);
@@ -155,7 +166,7 @@ async function displayOneTrip(trip, index, tripsDisplay) {
 }
 //NO TRIPS TO DISPLAY
 const displayNoTrips = async() => {
-  const tripsFromCache = awiat getTripsfromCache();
+  const tripsFromCache = await getTripsfromCache();
   const noTripsSection = document.getElementById('no-data');
   noTripsSection.style.display = !tripsFromCache || tripsFromCache.length == 0 ? "block" : "none";
 }

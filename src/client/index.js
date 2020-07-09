@@ -1,4 +1,4 @@
-import './styles/styles.scss'
+import './styles/style.scss'
 
 import { addTrip, dateChecker } from './js/app'
 

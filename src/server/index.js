@@ -9,16 +9,12 @@ var axios = require('axios')
 dotenv.config();
 const app = express();
 
-
-
-
-
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('dist'))
 
-app.listen(3000 () => {
+app.listen(3000, () => {
   console.log(`Listening on port: 3000`)
 });
 
@@ -28,6 +24,8 @@ app.get('/', function (req, res) {
 });
 
 app.get('/forecast', async(req, res) => {
+  console.log(`looking for: ${req.query.loc} with date: ${req.query.date}`);
+
   const loc = encodeURIComponent(req.query.loc);
   const date = req.query.date;
 
@@ -36,7 +34,7 @@ app.get('/forecast', async(req, res) => {
     var dataToSave = await getCombinedData(loc, date);
     res.send(dataToSave);
   } catch (error) {
-    console.error('error')
+    console.error('error', error)
     res.status(500).send();
   }
 })
@@ -56,7 +54,7 @@ async function getCombinedData(loc, date) {
   let weather = {}
   if (getWeatherData(date) == true) {
     const weatherKey = process.env.WEATHERBIT_API_KEY;
-    const weatherURL = `https://api.weatherbit.io/v2.0/forecast/daily?lat=${locationGeo.lat}&lon=${locationGeo.lng}&key=${weatherBitKey}`
+    const weatherURL = `https://api.weatherbit.io/v2.0/forecast/daily?lat=${locationGeo.lat}&lon=${locationGeo.lng}&key=${weatherKey}`
     var weatherRes = await axios.get(weatherURL, headers)
     const weatherData = weatherRes.data.data[0]
     const onDate = weatherRes.data.data.find(x => x.datetime == date)
@@ -70,11 +68,12 @@ async function getCombinedData(loc, date) {
   }
   //Image Data
   const pixKey = process.env.PIXABAY_API_KEY;
-  const imgURL = `https://pixabay.com/api/?key=${pixaBayKey}&q=${place}&image_type=photo&pretty=true`
+  const imgURL = `https://pixabay.com/api/?key=${pixKey}&q=${loc}&image_type=photo&pretty=true&category=places`
   imgURLRes = await axios.get(imgURL, headers)
-  let imgURL = ""
-  if (imgUrlRes.data != null && imgUrlRes.data.hits != null && imgUrlRes.data.hits.length > 0)
-    imageUrl = imgUrlRes.data.hits[0]
+  let imageURL = ""
+  if (imgURLRes.data != null && imgURLRes.data.hits != null && imgURLRes.data.hits.length > 0)
+    imageURL = imgURLRes.data.hits[0]
+
   var dataToSave = {
     date: date,
     location: locationGeo,
@@ -86,7 +85,7 @@ async function getCombinedData(loc, date) {
 
 function getWeatherData(date) {
   let dte = new Date(date)
-  const diffTime = Math.abs(dt - new Date())
+  const diffTime = Math.abs(dte - new Date())
   const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
   return diffDays < 16;
 }
