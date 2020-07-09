@@ -27,7 +27,7 @@ app.get('/', function (req, res) {
   res.sendFile(path.resolve('./dist/index.html'))
 });
 
-app.get('forecast', async(req, res) => {
+app.get('/forecast', async(req, res) => {
   const loc = encodeURIComponent(req.query.loc);
   const date = req.query.date;
 
