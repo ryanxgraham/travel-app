@@ -6,6 +6,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSAssetsPlugin = require('optimize-css-assets-webpack-plugin');
 const WorkboxPlugin = require('workbox-webpack-plugin');
+const CopyPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: './src/client/index.js',
@@ -15,7 +16,8 @@ module.exports = {
       library: 'Client'
     },
     optimization : {
-      minimizer: [new TerserPlugin({}), new OptimizeCSSAssetsPlugin({})],
+      minimize: true,
+      minimizer: [new TerserPlugin(), new OptimizeCSSAssetsPlugin({})],
     },
     module: {
       rules: [
@@ -38,11 +40,8 @@ module.exports = {
     },
     plugins: [
       new CleanWebpackPlugin({
-        // Simulate the removal of files
         dry: true,
-        // Write Logs to Console
         verbose: true,
-        // Automatically remove all unused webpack assets on rebuild
         cleanStaleWebpackAssets: true,
         protectWebpackAssets: false
       }),
@@ -54,6 +53,14 @@ module.exports = {
       new WorkboxPlugin.GenerateSW({
         clientsClaim: true,
         skipWaiting: true
+      }),
+      new CopyPlugin({
+       patterns: [
+         { from: './src/client/icons', to: 'icons' }
+       ],
+       options: {
+         concurrency: 100,
+       },
       }),
     ]
 }
