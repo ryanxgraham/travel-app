@@ -1,12 +1,3 @@
-//LOADING WHEEL
-const spinner = document.getElementById("spinner");
-function showSpinner() {
-  spinner.className = "show";
-  spinner.className = spinner.className.replace("show", "");
-}
-function hideSpinner() {
-  spinner.className = spinner.className.replace("show", "");
-}
 //VALIDATE DATE FORMAT
 function dateChecker(possibleDate) {
   var datePattern = /^\d{4}\-(0?[1-9]|1[012])\-(0?[1-9]|[12][0-9]|3[01])$/;
@@ -17,12 +8,10 @@ function dateChecker(possibleDate) {
 
 //GET INFO ABOUT A TRIP
 const getTripData = async(loc, date, dataToSave = {}) => {
-  showSpinner()
   try {
-    let res = await fetch(`http://localhost:3000/forecast?loc=${loc}&date=${date}`)
-    .then(hideSpinner())
+    let res = await fetch(`http://localhost:8080/forecast?loc=${loc}&date=${date}`)
+    console.log(res)
     let resData = res.json()
-    console.log(resData)
     return resData;
   } catch (error) {
     console.log('Error!', error)
@@ -31,19 +20,25 @@ const getTripData = async(loc, date, dataToSave = {}) => {
 
 //ADD A TRIP & SAVE LOCALLY
 async function addTrip(event) {
-  event.preventDefault();
-  const loc = document.getElementById('loc');
-  const date = document.getElementById('date');
-
-  if (Client.dateChecker(date.value) != true) {
-    alert('Invalid date! Please use YYYY-MM-DD format.');
-    return false;
+  try{
+    event.preventDefault();
+    const loc = document.getElementById('loc');
+    const date = document.getElementById('date');
+    console.log(loc.value)
+    console.log(date.value)
+    if (Client.dateChecker(date.value) != true) {
+      alert('Invalid date! Please use YYYY-MM-DD format.');
+      return false;
+    }
+    const tripData = await getTripData(loc.value, date.value)
+      console.log(tripData);
+      await saveTripstoCache(tripData);
+      displayOneTrip(tripData, getTripData.length);
+      loc.value = "";
+      date.value = "";
+  } catch (error) {
+    console.log('Error!', error)
   }
-  const  tripData = await getTripData(loc.value, date.value)
-  await saveTripstoCache(tripData);
-  displayOneTrip(tripData, getTripData.length)
-  loc.value = "";
-  date.value = "";
 }
 
 //DISPLAY ALL TRIPS
@@ -104,7 +99,7 @@ async function displayOneTrip(trip, index, tripsDisplay) {
   }
 
   //CREATE TRIP CARD
-  const text = `Trip to ${trip.location.name}, ${trip.location.countryCode} on ${trip.date}`;
+  const text = `Trip to ${trip.location.name}, ${trip.location.adminName1}, ${trip.location.countryCode} on ${trip.date}`;
   let tripCard = document.createElement('div');
   tripCard.className = 'card';
 
@@ -130,7 +125,7 @@ async function displayOneTrip(trip, index, tripsDisplay) {
     img.className ='icon';
     wDiv.appendChild(img);
     let wInfo = document.createElement('div');
-    wInfo.innerHTML = `${trip.weather.temperature}&deg; with ${trip.weather.description}`;
+    wInfo.innerHTML = `${(trip.weather.temperature*9/5+32).toFixed(1)}&deg;F (${(trip.weather.temperature).toFixed(1)}&deg;C) with ${trip.weather.description}`;
     wDiv.appendChild(wInfo);
     tripCard.appendChild(wDiv);
   } else {
