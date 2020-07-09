@@ -1,127 +1,132 @@
-body{
-    background: #ffffff;
-    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
-}
+$font-stack: Helvetica, sans-serif;
+$primary-color: #280063;
+$secondary-color: #dbb9fc;
+$tertiary-color: #7c00f4;
+$quaternary-color: #545454;
 
-#app{
-    display: grid;
-    grid-auto-rows: minmax(150px, auto);
-    /* grid-template-columns:  */
-    height:100vh;
-    background: #3b4a6b;
-    color: #000;
-    justify-content: center;
-    grid-gap: .1rem;
-    font-size: 20px;
-    font-family: 'Oswald', sans-serif;
-}
-
-.holder{
-  margin: 1rem;
-}
-
-.entry{
-    background: rgba(59, 74, 107, .4);
-}
-
-#entryHolder{
+body {
+  display: grid;
+  grid-template-areas: 'header' 'main' 'footer';
+  grid-auto-rows: 10% 80% 10%;
+  color: $secondary-color;
+  background: linear-gradient(0deg,$primary-color,$tertiary-color 100%);
 
 }
 
-#date{
-
-}
-
-#temp{
-
-}
-
-#content{
-
-}
-
-.headline {
+header {
+  grid-area: header;
   display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-
-}
-.title{
-
+  align-items: center;
+  justify-content: center;
+  margin: 0px;
+  padding: 0px;
 }
 
-/*  Basic Styling To Override Default For Basic HTML Elements */
-label{
-    display:block;
-    font-size: 27px;
+main {
+  grid-area: main;
+}
+section {
+  max-width: 800px;
+  margin: auto auto;
 }
 
-input{
-    display:block;
-    height: 60px;
-    width: 320px;
-    background:#2f7ea3;
-    color: #000000;
-    font-size: 20px;
-    font-family: 'Oswald', sans-serif;
-    border: none;
-    border-radius: 1rem;
-    padding: .5rem;
+form {
+  border: 1px solid $primary-color;
+  border-radius: 25px;
+  padding: 40px;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-bottom: 25px;
+  box-shadow: .5rem .7rem 1rem $primary-color;
+}
+input {
+  text-align: center;
+  padding: 5px 20px;
+  line-height: 26px;
+  margin: 10px 0;
+  margin-left: 10px;
+  font-size: 1rem;
+  color: $primary-color;
+  background-color: $secondary-color;
+  border-radius: 25px;
+}
+footer {
+  grid-area: footer;
+  text-align: center;
 }
 
-button{
-    width: 100px;
-    height: 60px;
-
-    background: #365F81;
-    color: #000000;
-    font-size: 20px;
-    font-family: 'Oswald', sans-serif;
-    border: none;
-    box-shadow: 2px 4px 5px #444;
-    margin: .5rem;
-    border-radius: 1rem
-}
-button:hover{
-  background:#2f7ea3;
-}
-
-h1{
-    font-size: 36px;
-}
-
-textarea{
-    width: auto;
-    height: auto;
-    background:#2f7ea3;
-    color: #000;
-    font-size: 20px;
-    font-family: 'Oswald', sans-serif;
-    border-radius: 1rem;
-    padding: .5rem;
-}
-/* Reset style for HTML element on active to have no border*/
-input:focus,
-select:focus,
-textarea:focus,
-button:focus {
-    outline: none;
-}
-/* Style for Placeholder Text*/
-::placeholder { /* Firefox, Chrome, Opera */
-    color: #222;
-    font-family: 'Oswald', sans-serif;
-
-}
-
-:-ms-input-placeholder { /* Internet Explorer 10-11 */
-    color: #222;
-    font-family: 'Oswald', sans-serif;
-
+.card {
+  border: 1px solid $primary-color;
+  margin-bottom: 25px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 25px;
+  padding: 25px;
+  box-shadow: .5rem .7rem 1rem $primary-color;
+  .close {
+    color: $secondary-color;
+    font-size: 2rem;
+    align-self: flex-end;
+    margin: 10px;
+    text-decoration: none;
+  }
+  .weather {
+      order: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      img {
+          width: 40px;
+      }
+  }
+  .missing {
+      order: 2;
+      font-size: 1rem;
+      color: orange;
+      padding: 10px;
+  }
+  .image {
+    align-self: flex-end;
+      order: 0;
+      img {
+          margin-left: 20px;
+          width: 80%;
+          border: 1px solid black;
+      }
+  }
+  p {
+      order: 1;
+      font-size: 1rem;
+      font-weight: bolder;
+      align-self: center;
+  }
 }
 
-::-ms-input-placeholder { /* Microsoft Edge */
-    color: #222;
-    font-family: 'Oswald', sans-serif;
+.image {
+
+}
+
+#loc {
+
+}
+
+#date {
+
+}
+
+#submitbtn {
+
+}
+
+#no-data {
+    h2 {
+        text-align: center;
+    }
+}
+
+#results {
 
 }

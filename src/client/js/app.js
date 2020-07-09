@@ -125,6 +125,7 @@ async function displayOneTrip(trip, index, tripsDisplay) {
     img.className ='icon';
     wDiv.appendChild(img);
     let wInfo = document.createElement('div');
+    wInfo.className = 'info';
     wInfo.innerHTML = `${(trip.weather.temperature*9/5+32).toFixed(1)}&deg;F (${(trip.weather.temperature).toFixed(1)}&deg;C) with ${trip.weather.description}`;
     wDiv.appendChild(wInfo);
     tripCard.appendChild(wDiv);

@@ -68,7 +68,7 @@ async function getCombinedData(loc, date) {
   }
   //Image Data
   const pixKey = process.env.PIXABAY_API_KEY;
-  const imgURL = `https://pixabay.com/api/?key=${pixKey}&q=${loc}&image_type=photo&pretty=true&category=places`
+  const imgURL = `https://pixabay.com/api/?key=${pixKey}&q=${loc}&image_type=photo&pretty=true&category=places&orientation=horizontal`
   imgURLRes = await axios.get(imgURL, headers)
   let imageURL = ""
   if (imgURLRes.data != null && imgURLRes.data.hits != null && imgURLRes.data.hits.length > 0)

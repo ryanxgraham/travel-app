@@ -10,19 +10,18 @@
     </header>
   </body>
   <main>
-    <div id='errors'></div>
     <section>
-      <form class="" onsubmit="return Client.addTrip(event)">
+      <form class="form" onsubmit="return Client.addTrip(event)">
         <input id='loc' type='text' name='input-city' value='' placeholder='Destination' required>
         <input id='date' type='date' name='input-date' value='' placeholder='yyyy-mm-dd' required>
-        <input type="submit" name="" value="Save Trip">
+        <input id='submitbtn' type="submit" name="submit" value="Save Trip">
       </form>
     </section>
     <section id='no-data'>
       <h2> No saved trips </h2>
     </section>
     <section>
-      <div id= results></div>
+      <div id='results'></div>
     </section>
   </main>
   <footer>
