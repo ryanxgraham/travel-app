@@ -1,7 +1,7 @@
 # Udacity FEND Capstone Project - Travel App
 
 ## Description
-The goal of this project was a simple Javascript travel planning app that queries three different APIs and then responsively updates the view based on the location and date the user enters.  It uses [Geonames](https://www.geonames.org)for location data, that is then passed to [Weatherbit](https://www.weatherbit.io) for a weather forecast (up to 16 days in the future). [Pixabay](https://pixabay.com) is then used to find an image of the location.
+The goal of this project was a simple Javascript travel planning app that queries three different APIs and then responsively updates the view based on the location and date the user enters.  It uses [Geonames](https://www.geonames.org) for location data, that is then passed to [Weatherbit](https://www.weatherbit.io) for a weather forecast (up to 16 days in the future). [Pixabay](https://pixabay.com) is then used to find an image of the location.
 
 Added trips are automatically stored locally so the user can revisit the site and see their previous searches.  A delete button allows the user to remove a trip from the cache and page.
 
@@ -19,12 +19,13 @@ Run the following:
 npm install
 ```
 You will need to create accounts at
-```
+
 https://www.weatherbit.io/account/create
+
 https://pixabay.com/accounts/register/
+
 https://www.geonames.org/login
 
-```
 and get API keys from weatherbit and pixabay, then create a ```.env``` file in the root directory of the repo.
 add the following lines to the ```.env``` file:
 ```
@@ -50,9 +51,11 @@ npm run test
 ```
 
 ### In Production Mode
+To build the Production files:
 ```
 npm run build-prod
 ```
+To run the Production server:
 ```
 npm run start
 ```
