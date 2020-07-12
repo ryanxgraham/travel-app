@@ -5,6 +5,7 @@ $tertiary-color: #7c00f4;
 $quaternary-color: #545454;
 
 body {
+  width: auto;
   display: grid;
   grid-template-areas: 'header' 'main' 'footer';
   grid-auto-rows: 5% 90% 5%;
@@ -27,6 +28,7 @@ main {
   grid-area: main;
 }
 section {
+  width: auto;
   max-width: 800px;
   margin: auto auto;
 }
