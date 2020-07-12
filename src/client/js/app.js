@@ -9,7 +9,7 @@ function dateChecker(possibleDate) {
 //GET INFO ABOUT A TRIP
 const getTripData = async(loc, date, dataToSave = {}) => {
   try {
-    let res = await fetch(`http://localhost:8081/forecast?loc=${loc}&date=${date}`)
+    let res = await fetch(`http://localhost:3000/forecast?loc=${loc}&date=${date}`)
     console.log(res)
     let resData = res.json()
     return resData;

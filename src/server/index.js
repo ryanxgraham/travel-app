@@ -14,11 +14,17 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('dist'))
 
-app.listen(8081, () => {
-  console.log(`Listening on port: 8081`)
+app.listen(3000, () => {
+  console.log(`Listening on port: 3000`)
 });
 
 //GET REQUESTS
+app.get('/test', async (req, res) => {
+  res.json({message: 'pass!'}).send();
+  res.status(200).send();
+
+});
+
 app.get('/', function (req, res) {
   res.sendFile(path.resolve('./dist/index.html'))
 });
@@ -69,7 +75,7 @@ async function getCombinedData(loc, date) {
   //Image Data
   const pixKey = process.env.PIXABAY_API_KEY;
   const imgURL = `https://pixabay.com/api/?key=${pixKey}&q=${loc}&image_type=photo&pretty=true&category=places&orientation=horizontal`
-  imgURLRes = await axios.get(imgURL, headers)
+  let imgURLRes = await axios.get(imgURL, headers)
   let imageURL = ""
   if (imgURLRes.data != null && imgURLRes.data.hits != null && imgURLRes.data.hits.length > 0)
     imageURL = imgURLRes.data.hits[0]
