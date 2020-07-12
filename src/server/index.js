@@ -14,8 +14,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static('dist'))
 
-app.listen(8080, () => {
-  console.log(`Listening on port: 8080`)
+app.listen(8081, () => {
+  console.log(`Listening on port: 8081`)
 });
 
 //GET REQUESTS

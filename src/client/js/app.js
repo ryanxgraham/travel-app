@@ -9,7 +9,7 @@ function dateChecker(possibleDate) {
 //GET INFO ABOUT A TRIP
 const getTripData = async(loc, date, dataToSave = {}) => {
   try {
-    let res = await fetch(`http://localhost:8080/forecast?loc=${loc}&date=${date}`)
+    let res = await fetch(`http://localhost:8081/forecast?loc=${loc}&date=${date}`)
     console.log(res)
     let resData = res.json()
     return resData;
@@ -133,7 +133,7 @@ async function displayOneTrip(trip, index, tripsDisplay) {
     let noInfo = document.createElement('div');
     noInfo.innerHTML = 'No Weather Data Available.';
     noInfo.className = 'noinfo';
-    tripCard.appendChild(noinfo);
+    tripCard.appendChild(noInfo);
   }
 
   //LOCATION PHOTO
