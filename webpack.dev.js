@@ -18,6 +18,7 @@ module.exports = {
       contentBase: path.join(__dirname, 'capstone'),
       port: 8080,
       host: 'localhost',
+      clientLogLevel: 'trace',
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
