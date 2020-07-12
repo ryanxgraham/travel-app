@@ -3,7 +3,7 @@ $primary-color: #280063;
 $secondary-color: #dbb9fc;
 $tertiary-color: #7c00f4;
 $quaternary-color: #545454;
-
+$hover: 0rem 0rem 1rem $primary-color;
 body {
   width: auto;
   display: grid;
@@ -43,7 +43,12 @@ form {
   align-items: center;
   flex-direction: column;
   margin-bottom: 25px;
-  box-shadow: .5rem .7rem 1rem $primary-color;
+  &:hover {
+    box-shadow: $hover
+  }
+  #submitbtn:hover {
+    background-color: $tertiary-color;
+  }
 }
 input {
   text-align: center;
@@ -69,13 +74,21 @@ footer {
   flex-direction: column;
   border-radius: 25px;
   padding: 25px;
-  box-shadow: .5rem .7rem 1rem $primary-color;
+  &:hover {
+    box-shadow: $hover;
+  }
   .close {
+    width: 2rem;
     color: $secondary-color;
-    font-size: 2rem;
+    font-size: 1.5rem;
     align-self: flex-end;
     margin: 10px;
     text-decoration: none;
+    text-align: center;
+  }
+  .close:hover {
+    box-shadow: 0rem 0rem 1rem $primary-color;
+    border-radius: 25px;
   }
   .weather {
       order: 2;

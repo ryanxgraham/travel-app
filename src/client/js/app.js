@@ -109,7 +109,7 @@ async function displayOneTrip(trip, index, tripsDisplay) {
   delIcon.href = "#";
   delIcon.className = 'close'
   delIcon.addEventListener('click', async(e) => {
-    if (confirm(`Delete trop to ${trip.location.name}?`)) {
+    if (confirm(`Delete trip to ${trip.location.name}?`)) {
       await delTripFromCache(trip.id);
       await displayTrips();
     }
